@@ -1,0 +1,10 @@
+assets:
+  - .env
+steps:
+  - name: Setup LAMPApp.
+    plugin: LAMPApp
+  - name: Import .env variables and posting notification to Slack.
+    plugin: Script
+    script: |
+      source $ASSET_DIR/.env
+      curl -X POST -H 'Content-type: application/json' --data '{"text":"Probo Build ID: '$BUILD_ID' for Pull Request: '$PULL_REQUEST_LINK' is being tested now. View the build at '$BUILD_DOMAIN'."}' $SLACK_WEBHOOK_URL
